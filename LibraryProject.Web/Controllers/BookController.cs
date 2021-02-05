@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using LibraryProject.Model;
 using LibraryProject.Service;
+using LibraryProject.ViewModel;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -30,7 +31,7 @@ namespace LibraryProject.Web.Controllers
             }
 
             [HttpPost("addbook")]
-            public IActionResult AddBook(Book book)
+            public IActionResult AddBook(BookViewModel book)
             {
                 return Ok(this._bookService.AddBook(book));
             }

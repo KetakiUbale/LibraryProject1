@@ -30,17 +30,7 @@ namespace LibraryProject.Service
         }
         public Book GetById(int id)
         {
-
-
             return this._unitOfWork.BookRepository.GetById(id);
-        }
-     
-        public Book AddBook(Book book)
-        {
-            this._unitOfWork.BookRepository.Add(book);
-            this._unitOfWork.Save();
-
-            return book;
         }
         public Book UpdateBook(Book book)
         {
@@ -63,7 +53,14 @@ namespace LibraryProject.Service
             return false;
         }
 
-        
+        public BookViewModel AddBook(BookViewModel book)
+        {
+            Book newBook = this._mapper.Map<Book>(book);
+            this._unitOfWork.BookRepository.Add(newBook);
+            this._unitOfWork.Save();
+            return this._mapper.Map<BookViewModel>(newBook);
+        }
+
     }
 }
 

@@ -11,9 +11,11 @@ namespace LibraryProject.Service
     {
 
         IEnumerable<BookViewModel> GetAllBook();
+
+        BookViewModel AddBook(BookViewModel book);
         Book GetById(int id);
 
-        Book AddBook(Book book);
+      
         Book UpdateBook(Book book);
         bool DeleteBook(int bookId);
 

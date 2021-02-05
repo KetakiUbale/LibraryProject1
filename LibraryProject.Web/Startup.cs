@@ -19,6 +19,7 @@ namespace LibraryProject.Web
 {
     public class Startup
     {
+        private readonly string _allowOrigins = "_allowOrigins";
         public IConfiguration Configuration { get; }
         public Startup(IConfiguration configuration)
         {
@@ -30,6 +31,15 @@ namespace LibraryProject.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(
+                options =>
+                {
+                    options.AddPolicy(_allowOrigins, builder =>
+                    {
+                        builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().SetIsOriginAllowedToAllowWildcardSubdomains();
+                    });
+                }
+                );
             services.AddControllers().AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
             services.AddDbContext<BookContext>();
@@ -57,6 +67,8 @@ namespace LibraryProject.Web
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors(_allowOrigins);
 
             app.UseAuthorization();
 
